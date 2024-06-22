@@ -2,7 +2,7 @@ import os
 
 from langchain.retrievers.you import YouRetriever
 from langchain.chains import RetrievalQA
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
