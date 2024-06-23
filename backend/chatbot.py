@@ -53,7 +53,7 @@ def main():
                     ),  # This placeholder will be replaced by the actual chat history during the conversation. It helps in maintaining context.
 
                    HumanMessagePromptTemplate.from_template(
-                        "{human_input}"
+                        "{human_input} in London, England"
                     ),  # This template is where the user's current input will be injected into the prompt.
                 ]
             )
