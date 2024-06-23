@@ -4,7 +4,7 @@ export default function TabLayout() {
     return (
         <Tabs>
             <Tabs.Screen name="Home" options={{ headerShown: false }} />
-            <Tabs.Screen name="Saved" options={{ headerShown: false }} />
+            <Tabs.Screen name="Chat" options={{headerShown: false}} />
         </Tabs>
     )
 }

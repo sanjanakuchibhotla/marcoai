@@ -1,7 +1,7 @@
 import LocationCard from '@/components/LocationCard';
 import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, Pressable } from 'react-native';
 import GenerateCards from "@/components/Card"
 import {
   useAnimatedReaction,
@@ -37,18 +37,29 @@ export default function LocationScreen() {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Stack.Screen options={{ headerShown: false }} />
-      {locations.map((place, index) => (
-        <LocationCard
-          key={`${place.id}-${index}`}
-          place={place}
-          numOfCards={locations.length}
-          index={index}
-          activeIndex={activeIndex}
-          onResponse={onResponse}
-        />
-      ))}
+    <View style={styles.container}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Stack.Screen options={{ headerShown: false }} />
+        {locations.map((place, index) => (
+            <Pressable onPress={() => alert(place.Description)}>
+                <LocationCard
+                    key={`${place.id}`}
+                    place={place}
+                    numOfCards={locations.length}
+                    index={index}
+                    activeIndex={activeIndex}
+                    onResponse={onResponse}
+                />
+            </Pressable>
+        ))}
+        </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+    },
+})

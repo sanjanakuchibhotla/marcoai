@@ -103,7 +103,7 @@ const LocationCard = ({
         >
             <Image
             style={[StyleSheet.absoluteFillObject, styles.image]}
-            source={{ uri: place.image }}
+            source={require('@/assets/images/marco.jpg')}
             />
 
             <LinearGradient
@@ -113,7 +113,9 @@ const LocationCard = ({
             />
 
             <View style={styles.footer}>
-            <Text style={styles.name}>{place.Place}</Text>
+            <Text style={styles.name}>{place.Place} ({place.Price}) - {place.Type}</Text>
+            <Text style={styles.city}>{place.City}, Distance: {place.Distance} miles</Text>
+            <Text style={styles.description}>{place.Description}</Text>
             </View>
         </Animated.View>
         </GestureDetector>
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'flex-end',
 
-    position: 'absolute',
+    position: 'static',
 
     shadowColor: '#000',
     shadowOffset: {
@@ -136,15 +138,18 @@ const styles = StyleSheet.create({
       height: 1,
     },
     shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    shadowRadius: 10,
 
     elevation: 3,
   },
   image: {
-    borderRadius: 15,
+    borderRadius: 0,
+    position: 'absolute',
+    borderWidth: 4,
+    alignContent: 'center'
   },
   overlay: {
-    top: '50%',
+    // top: '10%',
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
   },
@@ -154,6 +159,16 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     color: 'white',
+    fontFamily: 'InterBold',
+  },
+  city: {
+    fontSize: 24,
+    color: 'yellow',
+    fontFamily: 'InterBold',
+  },
+  description: {
+    fontSize: 18,
+    color: 'tan',
     fontFamily: 'InterBold',
   },
 });
