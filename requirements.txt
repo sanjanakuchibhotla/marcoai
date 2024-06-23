@@ -2,4 +2,8 @@ Flask==2.3.2
 python-dotenv==1.0.1
 langchain
 openai
+<<<<<<< HEAD
 dspy==0.1.5
+=======
+mindsdb
+>>>>>>> 0f4823a7 (swipe)
