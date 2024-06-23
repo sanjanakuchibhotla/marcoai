@@ -10,7 +10,7 @@ def get_ai_snippets_for_query(query):
     params = {"query": query} 
     return requests.get(f"https://api.ydc-index.io/search?query={query}",params=params, headers=headers,).json()
 query = "places to visit near san francisco"
-print(get_ai_snippets_for_query("places to visit near san francisco"))
 
-query = "places to visit near san francisco"
-requests.get(f"https://api.ydc-index.io/search?query={query}",params=params, headers=headers,).json()
+
+result = get_ai_snippets_for_query("places to visit near san francisco")
+print(result['hits'][0]['description'])
