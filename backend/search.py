@@ -45,7 +45,7 @@ class BasicQA(dspy.Signature):
     question = dspy.InputField()
     answer = dspy.OutputField(desc="often between 40-50 words")
 
-question = "If you are in San Francisco for a trip, where could you go? Suggest affordable ideas and include prices."
+question = input("What is your question")
 
 # Define the predictor.
 generate_answer = dspy.Predict(BasicQA)
