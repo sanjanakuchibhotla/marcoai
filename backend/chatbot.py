@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 import requests
-
+import json
 from langchain.chains import LLMChain
 from langchain_core.prompts import (
     ChatPromptTemplate,
@@ -11,6 +11,7 @@ from langchain_core.prompts import (
 from langchain_core.messages import SystemMessage
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain_groq import ChatGroq
+
 
 ## importing socket module
 load_dotenv()
@@ -38,7 +39,10 @@ def main():
 
     memory = ConversationBufferWindowMemory(k=conversational_memory_length, memory_key="chat_history", return_messages=True)
 
-
+    f = open('./data.json')
+    data = json.load(f)
+    f = open('./ratings.json')
+    ratings = json.load(f)
     #chat_history = []
     user_question = ""
     question_number = 1
@@ -48,6 +52,30 @@ def main():
 
         # If the user has asked a question,
         if user_question:
+            if question_number % 5 == 0:
+                prompt = ChatPromptTemplate.from_messages(
+                [
+                    SystemMessage(
+                        content=system_prompt
+                    ),  # This is the persistent system prompt that is always included at the start of the chat.
+
+                    MessagesPlaceholder(
+                        variable_name="chat_history"
+                    ),  # This placeholder will be replaced by the actual chat history during the conversation. It helps in maintaining context.
+
+                   HumanMessagePromptTemplate.from_template(
+                       f"These are jsons of things I like: {data} and {ratings}"
+                    ),  # This template is where the user's current input will be injected into the prompt.
+                ]
+                )
+                conversation = LLMChain(
+                llm=groq_chat,  # The Groq LangChain chat object initialized earlier.
+                prompt=prompt,  # The constructed prompt template.
+                verbose=False,   # TRUE Enables verbose output, which can be useful for debugging.
+                memory=memory,  # The conversational memory object that stores and manages the conversation history.
+                )
+                response = conversation.predict(human_input=user_question)
+            
 
             # Construct a chat prompt template using various components
             prompt = ChatPromptTemplate.from_messages(
