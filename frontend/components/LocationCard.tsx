@@ -2,26 +2,21 @@ import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { GestureDetector, Gesture, GestureHandlerRootView } from 'react-native-gesture-handler';
-
+import { Location } from '@/components/Card'
 import Animated, {
   SharedValue,
   interpolate,
   runOnJS,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import { PanGesture } from 'react-native-gesture-handler';
 
 const screenWidth = Dimensions.get('screen').width;
 export const locationCardWidth = screenWidth * 0.8;
 
 type LocationCard = {
-  user: {
-    image: string;
-    name: string;
-  };
+  place: Location;
   numOfCards: number;
   index: number;
   activeIndex: SharedValue<number>;
@@ -29,7 +24,7 @@ type LocationCard = {
 };
 
 const LocationCard = ({
-  user,
+  place,
   numOfCards,
   index,
   activeIndex,
@@ -108,7 +103,7 @@ const LocationCard = ({
         >
             <Image
             style={[StyleSheet.absoluteFillObject, styles.image]}
-            source={{ uri: user.image }}
+            source={{ uri: place.image }}
             />
 
             <LinearGradient
@@ -118,7 +113,7 @@ const LocationCard = ({
             />
 
             <View style={styles.footer}>
-            <Text style={styles.name}>{user.name}</Text>
+            <Text style={styles.name}>{place.Place}</Text>
             </View>
         </Animated.View>
         </GestureDetector>
@@ -135,7 +130,6 @@ const styles = StyleSheet.create({
 
     position: 'absolute',
 
-    // shadow
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

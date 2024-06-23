@@ -2,58 +2,17 @@ import LocationCard from '@/components/LocationCard';
 import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import { GestureDetector, Gesture } from 'react-native-gesture-handler';
+import GenerateCards from "@/components/Card"
 import {
-  interpolate,
   useAnimatedReaction,
-  useDerivedValue,
   useSharedValue,
-  withDecay,
-  withSpring,
   runOnJS,
 } from 'react-native-reanimated';
 
-const dummuUsers = [
-  {
-    id: 1,
-    image:
-      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/vertical-images/1.jpg',
-    name: 'Dani',
-  },
-  {
-    id: 2,
-    image:
-      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/vertical-images/2.jpg',
-    name: 'Jon',
-  },
-  {
-    id: 3,
-    image:
-      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/vertical-images/3.jpg',
-    name: 'Dani',
-  },
-  {
-    id: 4,
-    image:
-      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/vertical-images/4.jpeg',
-    name: 'Alice',
-  },
-  {
-    id: 5,
-    image:
-      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/vertical-images/5.jpg',
-    name: 'Dani',
-  },
-  {
-    id: 6,
-    image:
-      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/vertical-images/6.jpg',
-    name: 'Kelsey',
-  },
-];
+const locations = GenerateCards();
 
-const LocationScreen = () => {
-  const [users, setUsers] = useState(dummuUsers);
+export default function LocationScreen() {
+  const [locs, setLocations] = useState(locations);
   const activeIndex = useSharedValue(0);
   const [index, setIndex] = useState(0);
 
@@ -67,9 +26,9 @@ const LocationScreen = () => {
   );
 
   useEffect(() => {
-    if (index > users.length - 3) {
+    if (index > locations.length - 3) {
       console.warn('Last 2 cards remining. Fetch more!');
-      setUsers((usrs) => [...usrs, ...dummuUsers.reverse()]);
+      setLocations((locs) => [...locs, ...locations.reverse()]);
     }
   }, [index]);
 
@@ -80,14 +39,11 @@ const LocationScreen = () => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Stack.Screen options={{ headerShown: false }} />
-      {/* <Text style={{ top: 70, position: 'absolute' }}>
-        Current index: {index}
-      </Text> */}
-      {users.map((user, index) => (
+      {locations.map((place, index) => (
         <LocationCard
-          key={`${user.id}-${index}`}
-          user={user}
-          numOfCards={users.length}
+          key={`${place.id}-${index}`}
+          place={place}
+          numOfCards={locations.length}
           index={index}
           activeIndex={activeIndex}
           onResponse={onResponse}
@@ -96,5 +52,3 @@ const LocationScreen = () => {
     </View>
   );
 };
-
-export default LocationScreen;
