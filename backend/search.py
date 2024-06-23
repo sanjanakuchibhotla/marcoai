@@ -21,13 +21,19 @@ location = input("Where are you located?\n")
 prefs = {k: v for k, v in sorted(data.adventure_ratings.items(), key=lambda item: item[1]["average_rating"], reverse=True)}
 prefsList = prefs.keys()
 userLikes = "The user enjoys, from most to least, " + ', '.join(prefsList) + '.'
-searchPrompt = userLikes + " The user inputted the following for their ideas: " + userPreference + "\n Can you give suggestions near " + location + " ? Return a json string where each suggestion has the following format that I can turn into python: {Place: string; City: string; Description: string; Distance: number; Price: (range from $ to $$$$); Resources/Links: string} "
+searchPrompt = userLikes + " The user inputted the following for their ideas: " + userPreference + "\n Can you give suggestions near " + location + " ? Return a json string where each suggestion has the following format that I can turn into python, only return the json string as answer: {Place: string; City: string; Description: string; Distance: number; Price: (range from $ to $$$$); Resources/Links: string} "
 
 yr = YouRetriever()
 model = "gpt-4o"
 qa = RetrievalQA.from_chain_type(llm=ChatOpenAI(model=model), chain_type="stuff", retriever=yr)
 data = qa.run(searchPrompt)
-data = data.strip('json\n')
+data = data.lstrip("```json\n")
+data = data.rstrip("\n```")
+data = json.loads(data)
+
+with open("./test.json", 'w') as file:
+        json.dump(data, file)
+
 print(data)
 
 # json.loads(data)
